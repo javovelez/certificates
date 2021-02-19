@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_certificate_user,certificatesUser,model_certificates_certificates,certificates_group_user,1,0,0,0
+access_certificate_manager,certficatesManager,model_certificates_certificates,certificates_group_manager,1,1,1,1
+access_ordendecompra_manager,ordencompraManager,model_certificates_ordencompra,certificates_group_manager,1,1,1,1
+access_subc_ol_manager,tareassubcManager,model_certificates_subc_ol,certificates_group_manager,1,1,1,1
+access_subcontractor_manager,subcontractorManager,model_certificates_subcontractor,certificates_group_manager,1,1,1,1
+access_order_line_manager,orderlineManager,model_certificates_order_line,certificates_group_manager,1,1,1,1

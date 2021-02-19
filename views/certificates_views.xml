@@ -1,0 +1,153 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!-- Certificado tree -->
+    <record model="ir.ui.view" id="certificates.certificate_list">
+      <field name="name">certificates list</field>
+      <field name="model">certificates.certificates</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="state"/>
+          <field name="oc_id"/>
+        </tree>
+      </field>
+    </record>
+    <!-- Certificado form -->
+    <record model="ir.ui.view" id="certificates.certificate_form">
+      <field name="name">certificates form</field>
+      <field name="model">certificates.certificates</field>
+      <field name="arch" type="xml">
+        <form string='Certificados'>
+          <header>
+            <button name="action_certificate_send" string="Enviado" type="object" class="btn-primary"/>
+          </header>
+          <sheet>
+            <field name="name" placeholder="Nombre del certificado"/>
+            <group>
+            <group>
+              <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
+              <field name="oc_id"/>
+              <field name="currency_id" options="{'no_create': True}"/>
+            </group>
+            <group>
+              <field name="recepcion"/>
+              <field name="validity_date" groups="base.group_no_one" />
+            </group>
+            </group>
+            <group>
+              <field name= "ruta" placeholder="Ruta al certificado"/>
+            </group>
+            <notebook>
+              <page string="Servicio">
+                <field name="order_line">
+                  <tree string="Servicios" editable="bottom">
+                    <field name="product_id" required="True" widget="product_configurator"/>
+                    <field name="name"/>
+                    <field name="price_unit"/>
+                  </tree>
+                </field>
+              </page>
+              <page string="Tareas subcontratistas" >
+                  <field name="subc_ol_ids">
+                    <tree string="Tareas Subcontratistas">
+                      <field name="subcontractor_id"/>
+                      <field name="price_unit"/>
+                    </tree>
+                  </field>
+              </page>
+              
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- Tareas subcontratistas tree -->
+    <record model="ir.ui.view" id="certificates.subc_ol_list">
+      <field name="name">Tareas subcontratistas list</field>
+      <field name="model">certificates.subc_ol</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="subcontractor_id"/>
+          <field name="cert_name"/>
+          <field name="partes"/>
+          <field name="price_unit"/>
+        </tree>
+      </field>
+    </record>
+    <!-- certificado subcontratistas form -->
+    <record model="ir.ui.view" id="certificates.subc_ol_form">
+      <field name="name">Tareas subcontratistas form</field>
+      <field name="model">certificates.subc_ol</field>
+      <field name="arch" type="xml">
+        <form string='Tareas subcontratistas'>
+          <header>
+          </header>
+          <sheet>
+            <field name="cert_name" placeholder="Certificado asociado"/>
+            <group>
+              <field name="subcontractor_id"/>
+              <field name="price_unit"/>
+              <field name="partes"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    <!-- acción vista principal -->
+    <record model="ir.actions.act_window" id="certificates.action_window">
+      <field name="name">Certificados TIMSA</field>
+      <field name="res_model">certificates.certificates</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- acción vista certificacios subcontratistas -->
+    <record model="ir.actions.act_window" id="certificates.subc_certif_action_window">
+      <field name="name">Tareas subcontratistas</field>
+      <field name="res_model">certificates.subc_ol</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- acción vista ordenes de compra -->
+    <record model="ir.actions.act_window" id="certificates.oc_action_window">
+      <field name="name">Orden de compra</field>
+      <field name="res_model">certificates.ordencompra</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- acción vista de subcontratistas -->
+    <record model="ir.actions.act_window" id="certificates.subc_action_window">
+      <field name="name">Subcontratistas</field>
+      <field name="res_model">certificates.subcontractor</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="certificates.action_server">
+      <field name="name">certificates server</field>
+      <field name="model_id" ref="model_certificates_certificates"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+    <!-- Top menu item -->
+    <menuitem name="Certificados" id="certificates.menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Certificados" id="certificates.certificados" parent="certificates.menu_root" action="certificates.action_window"/>
+    <menuitem name="Subcontratistas" id="certificates.subcontratistas" parent="certificates.menu_root"/>
+    <menuitem name="Órdenes de compra" id="certificates.oc_list" parent="certificates.menu_root" action="certificates.oc_action_window"/>
+    <menuitem name="Tareas Subcontratistas" id="certificates.subs_certificates" parent="certificates.subcontratistas" action="certificates.subc_certif_action_window"/>
+    <menuitem name="Subcontratistas" id="certificates.subcontratistas_list" parent="certificates.subcontratistas" action="certificates.subc_action_window"/>
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="certificates.menu_1_list" parent="certificates.menu_1"
+              action="certificates.action_window"/>
+    <menuitem name="Server to list" id="certificates" parent="certificates.menu_2"
+              action="certificates.action_server"/>
+-->
+  </data>
+</odoo>
