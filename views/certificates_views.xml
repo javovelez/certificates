@@ -20,7 +20,11 @@
       <field name="arch" type="xml">
         <form string='Certificados'>
           <header>
-            <button name="action_certificate_send" string="Enviado" type="object" class="btn-primary"/>
+            <button 
+              name="action_certificate_send" 
+              string="Enviado" type="object" class="btn-primary"
+              attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,sent,to_invoice,invoiced"/>
           </header>
           <sheet>
             <field name="name" placeholder="Nombre del certificado"/>
@@ -33,6 +37,7 @@
             <group>
               <field name="recepcion"/>
               <field name="validity_date" groups="base.group_no_one" />
+              <field name="partner_shipping_id" invisible="1"/>
             </group>
             </group>
             <group>
@@ -45,8 +50,25 @@
                     <field name="product_id" required="True" widget="product_configurator"/>
                     <field name="name"/>
                     <field name="price_unit"/>
+                    <field name="product_uom_qty"/>
+                    <field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale')]"/>
+                    <field name="price_subtotal" />
                   </tree>
                 </field>
+                <group name="note_group" col="6">
+                    <group colspan="4">
+                        <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                    </group>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                        <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="amount_total" />
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                    <div class="oe_clear"/>
+                </group>
               </page>
               <page string="Tareas subcontratistas" >
                   <field name="subc_ol_ids">
@@ -119,6 +141,25 @@
       <field name="res_model">certificates.subcontractor</field>
       <field name="view_mode">tree,form</field>
     </record>
+
+    <record id="sales_team.crm_team_salesteams_act" model="ir.actions.act_window">
+      <field name="name">Equipos</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- <record id="crm_team_cert_view_form" model="ir.ui.view">
+        <field name="name">crm.team.form</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+          <field name="arch" position="inside">
+                <form string="Equipos"/>
+          </field>  
+          <field name="invoiced_target">
+                <attribute name="invisible">True</attribute>
+          </field>  
+        </field>
+    </record> -->
     <!-- server action to the one above -->
 <!--
     <record model="ir.actions.server" id="certificates.action_server">
@@ -135,13 +176,44 @@
     </record>
 -->
     <!-- Top menu item -->
-    <menuitem name="Certificados" id="certificates.menu_root"/>
+    <menuitem name="Certificados" 
+      id="certificates.menu_root" 
+      groups="certificates_group_user"
+      web_icon="certificates,static/description/icon.png"
+      />
     <!-- menu categories -->
-    <menuitem name="Certificados" id="certificates.certificados" parent="certificates.menu_root" action="certificates.action_window"/>
-    <menuitem name="Subcontratistas" id="certificates.subcontratistas" parent="certificates.menu_root"/>
-    <menuitem name="Órdenes de compra" id="certificates.oc_list" parent="certificates.menu_root" action="certificates.oc_action_window"/>
-    <menuitem name="Tareas Subcontratistas" id="certificates.subs_certificates" parent="certificates.subcontratistas" action="certificates.subc_certif_action_window"/>
-    <menuitem name="Subcontratistas" id="certificates.subcontratistas_list" parent="certificates.subcontratistas" action="certificates.subc_action_window"/>
+    <menuitem name="Certificados" 
+      id="certificates.certificados" 
+      parent="certificates.menu_root" 
+      action="certificates.action_window"
+      />
+    <menuitem name="Subcontratistas" 
+      id="certificates.subcontratistas" 
+      parent="certificates.menu_root"
+      />
+    <menuitem name="Órdenes de compra" 
+      id="certificates.oc_list" 
+      parent="certificates.menu_root" 
+      action="certificates.oc_action_window"
+      />
+    <menuitem name="Tareas Subcontratistas" 
+      id="certificates.subs_certificates" 
+      parent="certificates.subcontratistas" 
+      action="certificates.subc_certif_action_window"/>
+    <menuitem name="Subcontratistas" 
+      id="certificates.subcontratistas_list" 
+      parent="certificates.subcontratistas" 
+      action="certificates.subc_action_window"/>
+    <menuitem name="Subcontratistas" 
+      id="certificates.subcontratistas_list" 
+      parent="certificates.subcontratistas" 
+      action="certificates.subc_action_window"/>
+    <menuitem name="Equipos"
+      id="report_sales_team"
+      parent="certificates.menu_root"
+      action="sales_team.crm_team_salesteams_act"
+      /> <!-- groups="sales_team.group_sale_manager" -->
+
     <!-- actions -->
 <!--
     <menuitem name="List" id="certificates.menu_1_list" parent="certificates.menu_1"
