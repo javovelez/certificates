@@ -11,4 +11,4 @@ class AccountAnalyticLine(models.Model):
         # return [('qty_delivered_method', '=', 'analytic')]
         return []
 
-    cert_o_line = fields.Many2one('certificates.order.line', string='Certificate Order Item', domain=lambda self: self._default_sale_line_domain())
+    cert_o_line = fields.Many2one('certificate.order.line', string='Certificate Order Item', domain=lambda self: self._default_sale_line_domain())

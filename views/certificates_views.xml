@@ -4,7 +4,7 @@
     <!-- Certificado tree -->
     <record model="ir.ui.view" id="certificates.certificate_list">
       <field name="name">certificates list</field>
-      <field name="model">certificates.certificates</field>
+      <field name="model">certificate</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
@@ -15,8 +15,8 @@
     </record>
     <!-- Certificado form -->
     <record model="ir.ui.view" id="certificates.certificate_form">
-      <field name="name">certificates form</field>
-      <field name="model">certificates.certificates</field>
+      <field name="name">certificate form</field>
+      <field name="model">certificate</field>
       <field name="arch" type="xml">
         <form string='Certificados'>
           <header>
@@ -87,7 +87,7 @@
     <!-- Tareas subcontratistas tree -->
     <record model="ir.ui.view" id="certificates.subc_ol_list">
       <field name="name">Tareas subcontratistas list</field>
-      <field name="model">certificates.subc_ol</field>
+      <field name="model">certificate.subc_ol</field>
       <field name="arch" type="xml">
         <tree>
           <field name="subcontractor_id"/>
@@ -100,7 +100,7 @@
     <!-- certificado subcontratistas form -->
     <record model="ir.ui.view" id="certificates.subc_ol_form">
       <field name="name">Tareas subcontratistas form</field>
-      <field name="model">certificates.subc_ol</field>
+      <field name="model">certificate.subc_ol</field>
       <field name="arch" type="xml">
         <form string='Tareas subcontratistas'>
           <header>
@@ -120,25 +120,25 @@
     <!-- acción vista principal -->
     <record model="ir.actions.act_window" id="certificates.action_window">
       <field name="name">Certificados TIMSA</field>
-      <field name="res_model">certificates.certificates</field>
+      <field name="res_model">certificate</field>
       <field name="view_mode">tree,form</field>
     </record>
     <!-- acción vista certificacios subcontratistas -->
     <record model="ir.actions.act_window" id="certificates.subc_certif_action_window">
       <field name="name">Tareas subcontratistas</field>
-      <field name="res_model">certificates.subc_ol</field>
+      <field name="res_model">certificate.subc_ol</field>
       <field name="view_mode">tree,form</field>
     </record>
     <!-- acción vista ordenes de compra -->
     <record model="ir.actions.act_window" id="certificates.oc_action_window">
       <field name="name">Orden de compra</field>
-      <field name="res_model">certificates.ordencompra</field>
+      <field name="res_model">certificate.ordencompra</field>
       <field name="view_mode">tree,form</field>
     </record>
     <!-- acción vista de subcontratistas -->
     <record model="ir.actions.act_window" id="certificates.subc_action_window">
       <field name="name">Subcontratistas</field>
-      <field name="res_model">certificates.subcontractor</field>
+      <field name="res_model">certificate.subcontractor</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -178,7 +178,6 @@
     <!-- Top menu item -->
     <menuitem name="Certificados" 
       id="certificates.menu_root" 
-      groups="certificates_group_user"
       web_icon="certificates,static/description/icon.png"
       />
     <!-- menu categories -->

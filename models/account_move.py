@@ -9,7 +9,7 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     sale_line_ids = fields.Many2many(
-        'certificates.order.line',
+        'certificate.order.line',
         'cert_order_line_invoice_rel',
-        'invoice_line_id', 'certificates_line_id',
+        'invoice_line_id', 'certificate_line_id',
         string='Sales Order Lines', readonly=True, copy=False)

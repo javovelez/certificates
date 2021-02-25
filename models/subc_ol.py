@@ -2,10 +2,10 @@ from odoo import models, fields
 
 
 class SubcontratistaOrderLine(models.Model):
-    _name = 'certificates.subc_ol'
+    _name = 'certificate.subc_ol'
     _description ='Pedidos a Subcontratistas (order Line)'
     certificate_id = fields.Many2one(
-        'certificates.certificates', 
+        'certificate', 
         string='Certificado TIMSA', 
         required=True, 
         ondelete='cascade', 
@@ -20,7 +20,7 @@ class SubcontratistaOrderLine(models.Model):
     partes = fields.Char(string='Partes', help='En qué partes trabajó la Subcontratista')
     subcontractor_id = fields.Many2one(
         string='subcontratista',
-        comodel_name='certificates.subcontractor',
+        comodel_name='certificate.subcontractor',
         )
 
     product_id = fields.Many2one(

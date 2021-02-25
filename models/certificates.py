@@ -8,20 +8,20 @@ from odoo.tools.misc import formatLang, get_lang
 from odoo.osv import expression
 from odoo.tools import float_is_zero, float_compare
 
-class certificates(models.Model):
+class certificate(models.Model):
     
-    _name = 'certificates.certificates'
+    _name = 'certificate'
     _description ='Certificados Timsa'
     _order = 'write_date desc'
 
     oc_id = fields.Many2one(
         string='Orden de compra',
-        comodel_name='certificates.ordencompra',
+        comodel_name='certificate.ordencompra',
         ondelete='restrict'
         )
     subc_ol_ids = fields.One2many(
         string='subc_ol', 
-        comodel_name='certificates.subc_ol', 
+        comodel_name='certificate.subc_ol', 
         inverse_name='certificate_id'
         )
     ruta = fields.Char(
@@ -90,7 +90,7 @@ class certificates(models.Model):
         help="The analytic account related to a sales order.")
 
     order_line = fields.One2many(
-        'certificates.order.line', 
+        'certificate.order.line', 
         string='Order Lines', auto_join=True,  
         inverse_name='certificate_id'
         )
@@ -397,9 +397,9 @@ class certificates(models.Model):
         return moves
 
 
-class certificatesOrderLine(models.Model):
-    _name = "certificates.order.line"
-    _description = 'Certificates Order Line'
+class certificateOrderLine(models.Model):
+    _name = "certificate.order.line"
+    _description = 'certificate Order Line'
     
     #@api.depends('state')
     def _compute_invoice_status(self): #TODO
@@ -467,7 +467,7 @@ class certificatesOrderLine(models.Model):
         return
     
     certificate_id = fields.Many2one(
-        'certificates.certificates',
+        'certificate',
         string='Certificate Reference', 
         required=True, ondelete='cascade', 
         index=True, 
@@ -482,7 +482,7 @@ class certificatesOrderLine(models.Model):
     invoice_lines = fields.Many2many(
         'account.move.line', 
         'cert_order_line_invoice_rel', 
-        'certificates_line_id', 
+        'certificate_line_id', 
         'invoice_line_id', 
         string='Líneas de factura', 
         copy=False
