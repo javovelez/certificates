@@ -25,6 +25,7 @@
         'security/certificates_security.xml',
         'security/ir.model.access.csv',
         'views/certificates_views.xml',
+        'views/obra_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

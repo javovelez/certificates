@@ -36,3 +36,5 @@ access_mail_activity_type_certificate_manager,mail.activity.type.certificate.man
 access_ordendecompra_manager,ordencompraManager,model_certificate_ordencompra,sales_team.group_sale_manager,1,1,1,1
 access_subc_ol_manager,tareassubcManager,model_certificate_subc_ol,sales_team.group_sale_manager,1,1,1,1
 access_subcontractor_manager,subcontractorManager,model_certificate_subcontractor,sales_team.group_sale_manager,1,1,1,1
+access_obra_manager,obra.manager,model_obra,sales_team.group_sale_manager,1,1,1,1
+acces_item_manager,item_manager,model_item,sales_team.group_sale_manager,1,1,1,1

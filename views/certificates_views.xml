@@ -1,6 +1,7 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
+
     <!-- Certificado tree -->
     <record model="ir.ui.view" id="certificates.certificate_list">
       <field name="name">certificates list</field>
@@ -13,6 +14,7 @@
         </tree>
       </field>
     </record>
+    
     <!-- Certificado form -->
     <record model="ir.ui.view" id="certificates.certificate_form">
       <field name="name">certificate form</field>
@@ -118,7 +120,15 @@
     </record>
     <!-- actions opening views on models -->
     <!-- acción vista principal -->
-    <record model="ir.actions.act_window" id="certificates.action_window">
+
+
+    <record model="ir.actions.act_window" id="certificates.obras_action_window">
+      <field name="name">Obras TIMSA</field>
+      <field name="res_model">obra</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="certificates.cert_action_window">
       <field name="name">Certificados TIMSA</field>
       <field name="res_model">certificate</field>
       <field name="view_mode">tree,form</field>
@@ -176,15 +186,26 @@
     </record>
 -->
     <!-- Top menu item -->
-    <menuitem name="Certificados" 
+    <menuitem name="Obras" 
       id="certificates.menu_root" 
       web_icon="certificates,static/description/icon.png"
       />
     <!-- menu categories -->
+    <menuitem name="Obras" 
+      id="certificates.certificados_root" 
+      parent="certificates.menu_root" 
+      sequence="2"
+      />
+    <menuitem name="Obras" 
+      id="certificates.obras" 
+      parent="certificates.certificados_root" 
+      action="certificates.obras_action_window"
+      sequence="2"
+      />
     <menuitem name="Certificados" 
       id="certificates.certificados" 
-      parent="certificates.menu_root" 
-      action="certificates.action_window"
+      parent="certificates.certificados_root" 
+      action="certificates.cert_action_window"
       />
     <menuitem name="Subcontratistas" 
       id="certificates.subcontratistas" 

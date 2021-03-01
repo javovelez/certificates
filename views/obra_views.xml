@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+        <!-- obras tree -->
+    <record model="ir.ui.view" id="certificates.obras_list">
+      <field name="name">obras list</field>
+      <field name="model">obra</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="certificates.obra_form">
+      <field name="name">Obra form</field>
+      <field name="model">obra</field>
+      <field name="arch" type="xml">
+        <form string='Obras'>
+          <header>
+          </header>
+          <sheet>
+            <field name="name" placeholder="Nombre de la obra"/>
+            <group>
+            <group>
+              <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
+            </group>
+            <group>
+              <field name="partner_shipping_id" invisible="1"/>
+            </group>
+            </group>
+            <notebook>
+              <page string="Certificados">
+                <field name="cert_ids">
+                  <tree string="Certificados" editable="bottom">
+                    <field name="reference" />
+                    <field name="name"/>
+                    <field name="amount_untaxed"/>
+                  </tree>
+                </field>
+                <!-- <group name="note_group" col="6">
+                    <group colspan="4">
+                        <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                    </group>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                        <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="amount_total" />
+                        </div>
+                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                    <div class="oe_clear"/>
+                </group> -->
+              </page>
+              <page string="Órdenes de Compra" >
+                  <field name="oc_ids">
+                    <tree string="Órdenes de compra">
+                      <field name="name"/>
+                      <field name="monto"/>
+                    </tree>
+                  </field>
+              </page>
+              
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

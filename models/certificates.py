@@ -20,13 +20,13 @@ class certificate(models.Model):
         comodel_name='obra',
         ondelete='cascade',
     )
-    
 
     oc_id = fields.Many2one(
         string='Orden de compra',
         comodel_name='certificate.ordencompra',
-        ondelete='restrict'
-        )
+        ondelete='restrict',
+        domain=[('certificates.ordendecompra.id', '=','obra.oc_ids' )])
+        
     subc_ol_ids = fields.One2many(
         string='subc_ol', 
         comodel_name='certificate.subc_ol', 
@@ -40,6 +40,11 @@ class certificate(models.Model):
     #user_id #TODO equipos de venta y vendedor
 
     name = fields.Char(string='Certificado', required=True)
+    
+    reference = fields.Char(
+        string='Referencia',
+        )
+    
     state = fields.Selection(
         string='Estado',
         selection=[
@@ -164,7 +169,7 @@ class certificate(models.Model):
         )
     team_id = fields.Many2one(
         'crm.team', 'Equipo',
-        change_default=True)
+        related='obra_id.team_id')
         #default='_get_default_team',
 
     def action_certificate_send(self): #TODO
@@ -541,7 +546,8 @@ class certificateOrderLine(models.Model):
         )
     product_template_id = fields.Many2one(
         'product.template', string='Product Template',
-        related="product_id.product_tmpl_id", domain=[('sale_ok', '=', True),('type','=','service')])
+        related="product_id.product_tmpl_id", 
+        domain=[('sale_ok', '=', True),('type','=','service')])
     product_updatable = fields.Boolean(
         compute='_compute_product_updatable',
         string='Can Edit Product',
