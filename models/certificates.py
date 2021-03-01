@@ -14,6 +14,14 @@ class certificate(models.Model):
     _description ='Certificados Timsa'
     _order = 'write_date desc'
 
+    
+    obra_id = fields.Many2one(
+        string='Obra',
+        comodel_name='obra',
+        ondelete='cascade',
+    )
+    
+
     oc_id = fields.Many2one(
         string='Orden de compra',
         comodel_name='certificate.ordencompra',
@@ -155,7 +163,7 @@ class certificate(models.Model):
         default=lambda self: self.env.company
         )
     team_id = fields.Many2one(
-        'crm.team', 'Sales Team',
+        'crm.team', 'Equipo',
         change_default=True)
         #default='_get_default_team',
 
@@ -527,10 +535,13 @@ class certificateOrderLine(models.Model):
 
     product_id = fields.Many2one(
         comodel_name='product.product',
-        string='Servicio',
+        string='Obra',
         domain="[('sale_ok', '=', True)]",
         ondelete='restrict'
         )
+    product_template_id = fields.Many2one(
+        'product.template', string='Product Template',
+        related="product_id.product_tmpl_id", domain=[('sale_ok', '=', True),('type','=','service')])
     product_updatable = fields.Boolean(
         compute='_compute_product_updatable',
         string='Can Edit Product',
